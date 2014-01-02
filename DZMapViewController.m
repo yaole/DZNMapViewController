@@ -296,7 +296,7 @@ NSString *NSStringFromDZMapViewControllerProvider(DZMapViewControllerProvider pr
 {
     NSArray *titles = [self actionSheetTitles];
     
-    UIActionSheet *sheet = [UIActionSheet actionSheetWithTitle:@"Show route in..."
+    UIActionSheet *sheet = [UIActionSheet actionSheetWithTitle:NSLocalizedString(@"Show route in...", nil)
                                                   buttonTitles:titles
                                                      showInView:self.view
                                                      onDismiss:^(int buttonIndex, NSString *buttonTitle){
@@ -304,14 +304,6 @@ NSString *NSStringFromDZMapViewControllerProvider(DZMapViewControllerProvider pr
                                                      }];
     
     [EPCAppearance customizeActionSheet:sheet];
-}
-
-- (void)dismissController:(id)sender
-{
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_async(queue, ^{
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    });
 }
 
 

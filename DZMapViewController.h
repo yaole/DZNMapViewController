@@ -48,9 +48,5 @@ typedef NS_OPTIONS(NSUInteger, DZMapViewControllerSegment) {
  */
 - (instancetype)initWithLocation:(CLLocation *)location;
 
-/**
- *
- */
-- (void)dismissController:(id)sender;
 
 @end
