@@ -1,23 +1,23 @@
 //
-//  DZMapViewController.m
-//  DZMapViewController
+//  MKMapViewController.m
+//  MKMapViewController
 //
 //  Created by Ignacio on 10/7/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //
 
-#import "DZMapViewController.h"
-#import "DZMapAnnotation.h"
+#import "MKMapViewController.h"
+#import "MKMapViewAnnotation.h"
 
-static NSString *annotationIdentifier = @"DZMapAnnotation";
+static NSString *annotationIdentifier = @"MKMapViewAnnotation";
 
-@interface DZMapViewController ()
+@interface MKMapViewController ()
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic) BOOL canHideBars;
 @end
 
-@implementation DZMapViewController
+@implementation MKMapViewController
 
 - (instancetype)initWithLocation:(CLLocation *)location
 {
@@ -54,7 +54,7 @@ static NSString *annotationIdentifier = @"DZMapAnnotation";
     [super viewDidAppear:animated];
     
     if (_location) {
-        DZMapAnnotation *mapAnnotation = [[DZMapAnnotation alloc] initWithTitle:self.title subtitle:nil andCoordinate:_location.coordinate];
+        MKMapViewAnnotation *mapAnnotation = [[MKMapViewAnnotation alloc] initWithTitle:self.title subtitle:nil andCoordinate:_location.coordinate];
         [_mapView addAnnotation:mapAnnotation];
         
         double delayInSeconds = 1.0;
@@ -135,13 +135,13 @@ static NSString *annotationIdentifier = @"DZMapAnnotation";
 - (NSArray *)segmentedControlTitles
 {
     NSMutableArray *titles = [NSMutableArray array];
-    if ((_mapSegments & DZMapViewControllerSegmentStandard) > 0) {
+    if ((_mapSegments & MKMapViewControllerSupportStandard) > 0) {
         [titles addObject:NSStringFromMapType(MKMapTypeStandard)];
     }
-    if ((_mapSegments & DZMapViewControllerSegmentSatellite) > 0) {
+    if ((_mapSegments & MKMapViewControllerSupportSatellite) > 0) {
         [titles addObject:NSStringFromMapType(MKMapTypeSatellite)];
     }
-    if ((_mapSegments & DZMapViewControllerSegmentHybrid) > 0) {
+    if ((_mapSegments & MKMapViewControllerSupportHybrid) > 0) {
         [titles addObject:NSStringFromMapType(MKMapTypeHybrid)];
     }
     return titles;
@@ -150,17 +150,17 @@ static NSString *annotationIdentifier = @"DZMapAnnotation";
 - (NSArray *)actionSheetTitles
 {
     NSMutableArray *titles = [NSMutableArray array];
-    if ((_mapProviders & DZMapViewControllerProviderApple) > 0) {
-        [titles addObject:NSStringFromDZMapViewControllerProvider(DZMapViewControllerProviderApple)];
+    if ((_mapProviders & MKMapViewControllerProviderApple) > 0) {
+        [titles addObject:NSStringFromMKMapViewControllerProvider(MKMapViewControllerProviderApple)];
     }
-    if ((_mapProviders & DZMapViewControllerProviderGoogle) > 0 && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]) {
-        [titles addObject:NSStringFromDZMapViewControllerProvider(DZMapViewControllerProviderGoogle)];
+    if ((_mapProviders & MKMapViewControllerProviderGoogle) > 0 && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]) {
+        [titles addObject:NSStringFromMKMapViewControllerProvider(MKMapViewControllerProviderGoogle)];
     }
-    if ((_mapProviders & DZMapViewControllerProviderWaze) > 0 && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"waze://"]]) {
-        [titles addObject:NSStringFromDZMapViewControllerProvider(DZMapViewControllerProviderWaze)];
+    if ((_mapProviders & MKMapViewControllerProviderWaze) > 0 && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"waze://"]]) {
+        [titles addObject:NSStringFromMKMapViewControllerProvider(MKMapViewControllerProviderWaze)];
     }
-    if ((_mapProviders & DZMapViewControllerProviderMapBox) > 0 && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mapbox://"]]) {
-        [titles addObject:NSStringFromDZMapViewControllerProvider(DZMapViewControllerProviderMapBox)];
+    if ((_mapProviders & MKMapViewControllerProviderMapBox) > 0 && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mapbox://"]]) {
+        [titles addObject:NSStringFromMKMapViewControllerProvider(MKMapViewControllerProviderMapBox)];
     }
     return titles;
 }
@@ -190,31 +190,31 @@ MKMapType MKMapTypeFromString(NSString *string)
     }
 }
 
-DZMapViewControllerProvider mapViewControllerProviderFromString(NSString *string)
+MKMapViewControllerProvider mapViewControllerProviderFromString(NSString *string)
 {
-    if ([string isEqualToString:NSStringFromDZMapViewControllerProvider(DZMapViewControllerProviderGoogle)]) {
-        return DZMapViewControllerProviderGoogle;
+    if ([string isEqualToString:NSStringFromMKMapViewControllerProvider(MKMapViewControllerProviderGoogle)]) {
+        return MKMapViewControllerProviderGoogle;
     }
-    else if ([string isEqualToString:NSStringFromDZMapViewControllerProvider(DZMapViewControllerProviderWaze)]) {
-        return DZMapViewControllerProviderWaze;
+    else if ([string isEqualToString:NSStringFromMKMapViewControllerProvider(MKMapViewControllerProviderWaze)]) {
+        return MKMapViewControllerProviderWaze;
     }
-    else if ([string isEqualToString:NSStringFromDZMapViewControllerProvider(DZMapViewControllerProviderMapBox)]) {
-        return DZMapViewControllerProviderMapBox;
+    else if ([string isEqualToString:NSStringFromMKMapViewControllerProvider(MKMapViewControllerProviderMapBox)]) {
+        return MKMapViewControllerProviderMapBox;
     }
     else {
-        return DZMapViewControllerProviderApple;
+        return MKMapViewControllerProviderApple;
     }
 }
 
-NSString *NSStringFromDZMapViewControllerProvider(DZMapViewControllerProvider provider)
+NSString *NSStringFromMKMapViewControllerProvider(MKMapViewControllerProvider provider)
 {
-    if ((provider & DZMapViewControllerProviderGoogle) > 0) {
+    if ((provider & MKMapViewControllerProviderGoogle) > 0) {
         return NSLocalizedString(@"Google Maps", nil);
     }
-    else if ((provider & DZMapViewControllerProviderWaze) > 0) {
+    else if ((provider & MKMapViewControllerProviderWaze) > 0) {
         return NSLocalizedString(@"Waze", nil);
     }
-    else if ((provider & DZMapViewControllerProviderMapBox) > 0) {
+    else if ((provider & MKMapViewControllerProviderMapBox) > 0) {
         return NSLocalizedString(@"MapBox", nil);
     }
     else {
@@ -222,7 +222,7 @@ NSString *NSStringFromDZMapViewControllerProvider(DZMapViewControllerProvider pr
     }
 }
 
-- (void)setMapSegments:(DZMapViewControllerSegment)segments
+- (void)setMapSegments:(MKMapViewControllerSupport)segments
 {
     _mapSegments = segments;
     
@@ -231,7 +231,7 @@ NSString *NSStringFromDZMapViewControllerProvider(DZMapViewControllerProvider pr
     }
 }
 
-- (void)setMapProviders:(DZMapViewControllerProvider)providers
+- (void)setMapProviders:(MKMapViewControllerProvider)providers
 {
     _mapProviders = providers;
     
@@ -267,23 +267,23 @@ NSString *NSStringFromDZMapViewControllerProvider(DZMapViewControllerProvider pr
     [_mapView setMapType:_currentMapType];
 }
 
-- (void)shouldShowRouteFromProvider:(DZMapViewControllerProvider)provider
+- (void)shouldShowRouteFromProvider:(MKMapViewControllerProvider)provider
 {
     CLLocationCoordinate2D coordinate = _location.coordinate;
     CGFloat zoomLevel = _mapView.zoomLevel;
     NSString *_url;
     
     switch (provider) {
-        case DZMapViewControllerProviderApple:
+        case MKMapViewControllerProviderApple:
             _url = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&ll=%f,%f&z=%f",self.title, coordinate.latitude,coordinate.longitude,zoomLevel];
             break;
-        case DZMapViewControllerProviderGoogle:
+        case MKMapViewControllerProviderGoogle:
             _url = [NSString stringWithFormat:@"comgooglemaps://?daddr=%@&center=%f,%f&zoom=%f",self.title,coordinate.latitude,coordinate.longitude,zoomLevel];
             break;
-        case DZMapViewControllerProviderWaze:
+        case MKMapViewControllerProviderWaze:
             _url = [NSString stringWithFormat:@"waze://?ll=%f,%f&z=%f&navigate=yes",coordinate.latitude,coordinate.longitude,zoomLevel];
             break;
-        case DZMapViewControllerProviderMapBox:
+        case MKMapViewControllerProviderMapBox:
             _url = nil;
             break;
     }
