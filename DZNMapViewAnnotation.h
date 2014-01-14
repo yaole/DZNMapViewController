@@ -1,5 +1,5 @@
 //
-//  MKMapViewAnnotation.h
+//  DZNMapViewAnnotation.h
 //  DZNMapViewController
 //
 //  Created by Ignacio on 10/7/13.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface MKMapViewAnnotation : NSObject <MKAnnotation>
+@interface DZNMapViewAnnotation : NSObject <MKAnnotation>
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
