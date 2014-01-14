@@ -1,6 +1,6 @@
 //
 //  MKMapViewAnnotation.h
-//  MKMapViewController
+//  DZNMapViewController
 //
 //  Created by Ignacio on 10/7/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.

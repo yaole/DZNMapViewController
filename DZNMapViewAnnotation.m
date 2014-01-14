@@ -1,14 +1,14 @@
 //
-//  MKMapViewAnnotation.h
-//  MKMapViewController
+//  DZNMapViewAnnotation.h
+//  DZNMapViewController
 //
 //  Created by Ignacio on 10/7/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
 //
 
-#import "MKMapViewAnnotation.h"
+#import "DZNMapViewAnnotation.h"
 
-@implementation MKMapViewAnnotation
+@implementation DZNMapViewAnnotation
 
 - (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle andCoordinate:(CLLocationCoordinate2D)coordinate;
 {
