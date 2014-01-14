@@ -8,6 +8,8 @@
 
 #import "DZNMapViewController.h"
 #import "DZNMapViewAnnotation.h"
+#import "DZCategories.h"
+#import "iOSBlocks.h"
 
 static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
 
