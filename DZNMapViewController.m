@@ -242,7 +242,7 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 }
 
 
-#pragma mark - EPCMapViewController methods
+#pragma mark - DZNMapViewController methods
 
 - (void)handleMapTap:(UITapGestureRecognizer *)gesture
 {
@@ -296,14 +296,12 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 {
     NSArray *titles = [self actionSheetTitles];
     
-    UIActionSheet *sheet = [UIActionSheet actionSheetWithTitle:NSLocalizedString(@"Show route in...", nil)
-                                                  buttonTitles:titles
-                                                     showInView:self.view
-                                                     onDismiss:^(int buttonIndex, NSString *buttonTitle){
-                                                         [self shouldShowRouteFromProvider:mapViewControllerProviderFromString(buttonTitle)];
-                                                     }];
-    
-    [EPCAppearance customizeActionSheet:sheet];
+    [UIActionSheet actionSheetWithTitle:NSLocalizedString(@"Show route in...", nil)
+                           buttonTitles:titles
+                             showInView:self.view
+                              onDismiss:^(int buttonIndex, NSString *buttonTitle){
+                                  [self shouldShowRouteFromProvider:mapViewControllerProviderFromString(buttonTitle)];
+                              }];
 }
 
 
