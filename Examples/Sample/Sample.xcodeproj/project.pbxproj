@@ -14,7 +14,7 @@
 		4FBF281D1906E883009D7A34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF281C1906E883009D7A34 /* main.m */; };
 		4FBF28211906E883009D7A34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF28201906E883009D7A34 /* AppDelegate.m */; };
 		4FBF28231906E883009D7A34 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF28221906E883009D7A34 /* Images.xcassets */; };
-		4FBF28441906E8EC009D7A34 /* DZNMapViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF28411906E8EC009D7A34 /* DZNMapViewAnnotation.m */; };
+		4FBF28441906E8EC009D7A34 /* DZNAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF28411906E8EC009D7A34 /* DZNAnnotation.m */; };
 		4FBF28451906E8EC009D7A34 /* DZNMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF28431906E8EC009D7A34 /* DZNMapViewController.m */; };
 		4FBF28471906E8F6009D7A34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28461906E8F6009D7A34 /* MapKit.framework */; };
 		4FBF284B1906E98E009D7A34 /* MKMapView+Zoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF284A1906E98E009D7A34 /* MKMapView+Zoom.m */; };
@@ -34,8 +34,8 @@
 		4FBF281F1906E883009D7A34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FBF28201906E883009D7A34 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FBF28221906E883009D7A34 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4FBF28401906E8EC009D7A34 /* DZNMapViewAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNMapViewAnnotation.h; sourceTree = "<group>"; };
-		4FBF28411906E8EC009D7A34 /* DZNMapViewAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNMapViewAnnotation.m; sourceTree = "<group>"; };
+		4FBF28401906E8EC009D7A34 /* DZNAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNAnnotation.h; sourceTree = "<group>"; };
+		4FBF28411906E8EC009D7A34 /* DZNAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNAnnotation.m; sourceTree = "<group>"; };
 		4FBF28421906E8EC009D7A34 /* DZNMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNMapViewController.h; sourceTree = "<group>"; };
 		4FBF28431906E8EC009D7A34 /* DZNMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNMapViewController.m; sourceTree = "<group>"; };
 		4FBF28461906E8F6009D7A34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -120,8 +120,8 @@
 			children = (
 				4FBF28421906E8EC009D7A34 /* DZNMapViewController.h */,
 				4FBF28431906E8EC009D7A34 /* DZNMapViewController.m */,
-				4FBF28401906E8EC009D7A34 /* DZNMapViewAnnotation.h */,
-				4FBF28411906E8EC009D7A34 /* DZNMapViewAnnotation.m */,
+				4FBF28401906E8EC009D7A34 /* DZNAnnotation.h */,
+				4FBF28411906E8EC009D7A34 /* DZNAnnotation.m */,
 				4FBF28501906F18E009D7A34 /* DZNLocation.h */,
 				4FBF28511906F18E009D7A34 /* DZNLocation.m */,
 				4FBF28481906E98E009D7A34 /* Helper */,
@@ -203,7 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FBF284E1906EACC009D7A34 /* ViewController.m in Sources */,
-				4FBF28441906E8EC009D7A34 /* DZNMapViewAnnotation.m in Sources */,
+				4FBF28441906E8EC009D7A34 /* DZNAnnotation.m in Sources */,
 				4FBF28211906E883009D7A34 /* AppDelegate.m in Sources */,
 				4FBF28451906E8EC009D7A34 /* DZNMapViewController.m in Sources */,
 				4FBF28521906F18E009D7A34 /* DZNLocation.m in Sources */,

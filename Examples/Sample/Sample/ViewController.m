@@ -7,8 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "DZNMapViewController.h"
-
 
 typedef NS_ENUM(NSInteger, ViewControllerMapMode) {
     ViewControllerMapModeSingle,
@@ -23,20 +21,17 @@ static NSString *cellIdentifier = @"Cell";
 
 @implementation ViewController
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        self.title = @"DZNMapViewController";
-    }
-    return self;
-}
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = @"Choose an option";
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButton];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
 }
@@ -69,19 +64,40 @@ static NSString *cellIdentifier = @"Cell";
     switch (mode) {
         case ViewControllerMapModeSingle:
         {
-            DZNLocation *location = [[DZNLocation alloc] initWithTitle:@"Somewhere" latitude:37.49 longitude:122.25];
-            
+            controller = [[DZNMapViewController alloc] initWithLatitude:49.2802 longitude:-123.1182];
+        }
+            break;
+        case ViewControllerMapModeSingleDetailed:
+        {
+            DZNLocation *location = [[DZNLocation alloc] initWithTitle:@"Vancouver" subtitle:@"The city of glass" latitude:49.2802 longitude:-123.1182];
             controller = [[DZNMapViewController alloc] initWithLocation:location];
-            controller.title = @"Location";
+        }
+            break;
+            
+        case ViewControllerMapModeMultipleDetailed:
+        {
+            DZNLocation *denver = [[DZNLocation alloc] initWithTitle:@"Denver" subtitle:@"The city of performing arts" latitude:39.75 longitude:-105];
+            denver.image = [UIImage imageNamed:@"thumb_denver"];
+            denver.url = @"epc://show/120";
+            
+            DZNLocation *sanFrancisco = [[DZNLocation alloc] initWithTitle:@"San Francisco" subtitle:@"The city of lights" latitude:37.75 longitude:-122.5];
+            sanFrancisco.image = [UIImage imageNamed:@"thumb_sanfrancisco"];
+            sanFrancisco.url = @"epc://show/120";
+            
+            DZNLocation *newYork = [[DZNLocation alloc] initWithTitle:@"New York" subtitle:@"The city of dreams" latitude:40.71 longitude:-74.00];
+            newYork.image = [UIImage imageNamed:@"thumb_newyork"];
+            newYork.url = @"epc://show/120";
+            
+            controller = [[DZNMapViewController alloc] initWithLocations:@[denver, sanFrancisco, newYork]];
         }
             break;
             
         default:
-            return nil;
             break;
     }
     
-    
+    controller.delegate = self;
+    controller.title = @"DZNMapViewController";
     controller.mapSegments = DZNMapViewControllerSupportStandard|DZNMapViewControllerSupportHybrid;
     controller.mapProviders = DZNMapViewControllerProviderApple|DZNMapViewControllerProviderGoogle|DZNMapViewControllerProviderWaze;
     controller.showCallout = YES;
@@ -90,7 +106,6 @@ static NSString *cellIdentifier = @"Cell";
     
     return controller;
 }
-
 
 
 #pragma mark - UITableViewDataSource Methods
@@ -102,7 +117,7 @@ static NSString *cellIdentifier = @"Cell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -136,6 +151,14 @@ static NSString *cellIdentifier = @"Cell";
     if (controller) {
         [self.navigationController pushViewController:controller animated:YES];
     }
+}
+
+
+#pragma mark - DZNMapViewControllerDelegate Methods
+
+- (void)mapViewController:(DZNMapViewController *)controller didTapLink:(NSString *)url
+{
+    NSLog(@"%s : %@",__FUNCTION__, url);
 }
 
 

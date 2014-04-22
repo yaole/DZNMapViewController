@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DZNMapViewController.h"
 
-@interface ViewController : UITableViewController
+@interface ViewController : UITableViewController <DZNMapViewControllerDelegate>
 
 @end
