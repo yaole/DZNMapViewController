@@ -10,25 +10,39 @@
 
 @implementation DZNLocation
 
-- (id)initWithTitle:(NSString *)title latitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees)lon
+- (id)initWithTitle:(NSString *)title coordinate:(CLLocationCoordinate2D)coordinate
 {
-    return [self initWithTitle:title subtitle:nil latitude:lat longitude:lon];
+    return [self initWithTitle:title subtitle:nil coordinate:coordinate];
 }
 
-- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle latitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees)lon
+- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle coordinate:(CLLocationCoordinate2D)coordinate
 {
-    return [self initWithTitle:title subtitle:subtitle image:nil latitude:lat longitude:lon];
+    return [self initWithTitle:title subtitle:subtitle coordinate:coordinate];
 }
 
-- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle image:(UIImage *)image latitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees)lon
+- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle latitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude;
 {
-    self = [super initWithLatitude:lat longitude:lon];
+    self = [super initWithLatitude:latitude longitude:longitude];
     if (self) {
         self.title = title;
         self.subtitle = subtitle;
-        self.image = image;
     }
     return self;
+}
+
+- (CLLocationDegrees)latitude
+{
+    return self.coordinate.latitude;
+}
+
+- (CLLocationDegrees)longitude
+{
+    return self.coordinate.longitude;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"title : %@ | subtitle : %@ | image : %@ | Latitude : %f | longitude : %f", self.title, self.subtitle, self.image, self.coordinate.latitude, self.coordinate.longitude];
 }
 
 @end

@@ -12,10 +12,14 @@
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;
+@property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) UIImage *image;
 
-- (id)initWithTitle:(NSString *)title latitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees)lon;
-- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle latitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees)lon;
-- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle image:(UIImage *)image latitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees)lon;
+@property (nonatomic, readonly) CLLocationDegrees latitude;
+@property (nonatomic, readonly) CLLocationDegrees longitude;
+
+- (id)initWithTitle:(NSString *)title coordinate:(CLLocationCoordinate2D)coordinate;
+- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle coordinate:(CLLocationCoordinate2D)coordinate;
+- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle latitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude;
 
 @end

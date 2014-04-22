@@ -7,7 +7,7 @@
 //
 
 #import "DZNMapViewController.h"
-#import "DZNMapViewAnnotation.h"
+#import "DZNAnnotation.h"
 #import "MKMapView+Zoom.h"
 
 static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
@@ -20,9 +20,15 @@ static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
 
 @implementation DZNMapViewController
 
-- (instancetype)initWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
+
+- (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    DZNLocation *location = [[DZNLocation alloc] initWithLatitude:37.49 longitude:122.25];
+    return [self initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+}
+
+- (instancetype)initWithLatitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees)lon
+{
+    DZNLocation *location = [[DZNLocation alloc] initWithLatitude:lat longitude:lon];
     return [self initWithLocation:location];
 }
 
@@ -54,6 +60,8 @@ static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self addAllAnnotations];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,21 +72,6 @@ static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (_location) {
-        DZNMapViewAnnotation *mapAnnotation = [[DZNMapViewAnnotation alloc] initWithTitle:self.title subtitle:nil andCoordinate:_location.coordinate];
-        [_mapView addAnnotation:mapAnnotation];
-        
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [_mapView selectAnnotation:mapAnnotation animated:YES];
-        });
-        
-        CLLocationDistance distance = 200000;
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(mapAnnotation.coordinate, distance, distance);
-        [_mapView setRegion:region animated:NO];
-    }
     
     _canHideBars = YES;
 }
@@ -105,8 +98,7 @@ static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
         _mapView.rotateEnabled = YES;
         _mapView.pitchEnabled = YES;
         _mapView.showsPointsOfInterest = NO;
-        _mapView.showsBuildings = NO;
-        _mapView.showsUserLocation = NO;
+        _mapView.showsUserLocation = _showsUserLocation;
         _mapView.delegate = self;
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMapTap:)];
@@ -256,6 +248,74 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 
 #pragma mark - DZNMapViewController methods
 
+- (void)addAllAnnotations
+{
+    if (_locations.count == 0) {
+        return;
+    }
+    
+    for (int i = 0; i < _locations.count; i++) {
+        
+        DZNLocation *location = [_locations objectAtIndex:i];
+        
+        NSAssert([location isKindOfClass:[DZNLocation class]], @"Only DZNLocation class available.");
+        
+        DZNAnnotation *mapAnnotation = [[DZNAnnotation alloc] initWithTitle:location.title subtitle:location.subtitle andCoordinate:location.coordinate];
+        mapAnnotation.location = location;
+        
+        [_mapView addAnnotation:mapAnnotation];
+    }
+    
+    DZNAnnotation *firstAnnotation = [_mapView.annotations firstObject];
+    
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [_mapView selectAnnotation:firstAnnotation animated:YES];
+    });
+    
+    
+    CLLocationDistance distance = 200000;
+    MKCoordinateRegion region;
+    
+    if (_locations.count > 1) {
+        region = [self regionForAnnotations:_mapView.annotations];
+    }
+    else {
+        region = MKCoordinateRegionMakeWithDistance(firstAnnotation.coordinate, distance, distance);
+    }
+    
+    [_mapView setRegion:region animated:NO];
+}
+
+- (MKCoordinateRegion)regionForAnnotations:(NSArray *)annotations {
+    
+    CLLocationDegrees minLat = 90.0;
+    CLLocationDegrees maxLat = -90.0;
+    CLLocationDegrees minLon = 180.0;
+    CLLocationDegrees maxLon = -180.0;
+    
+    for (id <MKAnnotation> annotation in annotations) {
+        if (annotation.coordinate.latitude < minLat) {
+            minLat = annotation.coordinate.latitude;
+        }
+        if (annotation.coordinate.longitude < minLon) {
+            minLon = annotation.coordinate.longitude;
+        }
+        if (annotation.coordinate.latitude > maxLat) {
+            maxLat = annotation.coordinate.latitude;
+        }
+        if (annotation.coordinate.longitude > maxLon) {
+            maxLon = annotation.coordinate.longitude;
+        }
+    }
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(maxLat - minLat, maxLon - minLon);
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat - span.latitudeDelta / 2), maxLon - span.longitudeDelta / 2);
+    
+    return MKCoordinateRegionMake(center, span);
+}
+
 - (void)handleMapTap:(UITapGestureRecognizer *)gesture
 {
     if (_canHideBars && gesture.state == UIGestureRecognizerStateEnded) {
@@ -281,16 +341,17 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 
 - (void)shouldShowRouteFromProvider:(DZNMapViewControllerProvider)provider
 {
-    CLLocationCoordinate2D coordinate = _location.coordinate;
+    DZNAnnotation *annotation = [self.mapView.selectedAnnotations firstObject];
+    CLLocationCoordinate2D coordinate = annotation.coordinate;
     CGFloat zoomLevel = _mapView.zoomLevel;
     NSString *_url;
     
     switch (provider) {
         case DZNMapViewControllerProviderApple:
-            _url = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&ll=%f,%f&z=%f",self.title, coordinate.latitude,coordinate.longitude,zoomLevel];
+            _url = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&ll=%f,%f&z=%f", annotation.title, coordinate.latitude, coordinate.longitude, zoomLevel];
             break;
         case DZNMapViewControllerProviderGoogle:
-            _url = [NSString stringWithFormat:@"comgooglemaps://?daddr=%@&center=%f,%f&zoom=%f",self.title,coordinate.latitude,coordinate.longitude,zoomLevel];
+            _url = [NSString stringWithFormat:@"comgooglemaps://?daddr=%@&center=%f,%f&zoom=%f", annotation.title, coordinate.latitude, coordinate.longitude, zoomLevel];
             break;
         case DZNMapViewControllerProviderWaze:
             _url = [NSString stringWithFormat:@"waze://?ll=%f,%f&z=%f&navigate=yes",coordinate.latitude,coordinate.longitude,zoomLevel];
@@ -331,19 +392,37 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
         return nil;
     }
     
-    MKPinAnnotationView *locationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
-    locationView.canShowCallout = _showCallout;
-    locationView.pinColor = MKPinAnnotationColorRed;
-    locationView.animatesDrop = YES;
+    DZNAnnotation *_annotation = (DZNAnnotation *)annotation;
     
-    return locationView;
+    MKPinAnnotationView *view = [[MKPinAnnotationView alloc] initWithAnnotation:_annotation reuseIdentifier:annotationIdentifier];
+    view.canShowCallout = _showCallout;
+    view.pinColor = MKPinAnnotationColorRed;
+    view.animatesDrop = YES;
+    
+    if (_annotation.location.image) {
+        
+        CGFloat width = 36.0;
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
+        imageView.image = _annotation.location.image;
+        imageView.layer.cornerRadius = width / 2.0;
+        imageView.layer.masksToBounds = YES;
+        
+        view.leftCalloutAccessoryView = imageView;
+    }
+    
+    if (_annotation.location.url.length > 0) {
+        view.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    }
+    
+    return view;
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     MKAnnotationView *annotationView = [views lastObject];
     
-    double delayInSeconds = 1.0;
+    double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [mapView selectAnnotation:annotationView.annotation animated:YES];
@@ -352,7 +431,12 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-
+    if (self.delegate && [self.delegate respondsToSelector:@selector(mapViewController:didTapLink:)]) {
+        DZNAnnotation *annotation = (DZNAnnotation *)view.annotation;
+        [self.delegate mapViewController:self didTapLink:annotation.location.url];
+    }
+    
+    [view setSelected:NO animated:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
@@ -367,26 +451,17 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 
 - (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
 {
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_async(queue, ^{
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    });
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_async(queue, ^{
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    });
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
 {
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_async(queue, ^{
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    });
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 
@@ -401,11 +476,6 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 
 #pragma mark - UIGestureRecognizerDelegate Methods
 
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-//{
-//    return YES;
-//}
-
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if ([gestureRecognizer respondsToSelector:@selector(handleMapTap:)] && !_canHideBars) {
@@ -413,20 +483,6 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
     }
     return YES;
 }
-
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-//{
-//    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
-//        NSLog(@"\n%s\n gestureRecognizer : %@\notherGestureRecognizer : %@",__FUNCTION__, gestureRecognizer, otherGestureRecognizer);
-//        UITapGestureRecognizer *otherTapGestureRecognizer = (UITapGestureRecognizer *)otherGestureRecognizer;
-//        if ([gestureRecognizer respondsToSelector:@selector(handleMapTap:)] && otherTapGestureRecognizer.numberOfTapsRequired == 1) {
-//            return YES;
-//        }
-//        else return NO;
-//    }
-//    
-//    return NO;
-//}
 
 
 #pragma mark - View lifeterm

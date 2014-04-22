@@ -23,15 +23,15 @@ typedef NS_OPTIONS(NSUInteger, DZNMapViewControllerSupport) {
     DZNMapViewControllerSupportHybrid = (1 << 2)                 // MKMapTypeHybrid
 };
 
+@protocol DZNMapViewControllerDelegate;
 
 /**
  */
 @interface DZNMapViewController : UIViewController <MKMapViewDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate>
 
+@property (nonatomic, weak) id<DZNMapViewControllerDelegate> delegate;
 /** */
 @property (nonatomic, strong) MKMapView *mapView;
-/** */
-@property (nonatomic, readonly) CLLocation *location;
 /** */
 @property (nonatomic, readonly) NSArray *locations;
 /** */
@@ -48,10 +48,19 @@ typedef NS_OPTIONS(NSUInteger, DZNMapViewControllerSupport) {
 @property (nonatomic) BOOL showsUserLocation;
 
 
+- (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
+
 - (instancetype)initWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude;
 
 - (instancetype)initWithLocation:(DZNLocation *)location;
 
 - (instancetype)initWithLocations:(NSArray *)locations;
+
+@end
+
+
+@protocol DZNMapViewControllerDelegate <NSObject>
+
+- (void)mapViewController:(DZNMapViewController *)controller didTapLink:(NSString *)url;
 
 @end
