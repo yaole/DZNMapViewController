@@ -93,8 +93,10 @@ static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
 {
     if (!_mapView)
     {
-        _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
-        _mapView.mapType = MKMapTypeStandard;
+         MKMapType mapType = MKMapTypeFromString([self.segmentedControl titleForSegmentAtIndex:self.segmentedControl.selectedSegmentIndex]);
+        
+        _mapView = [MKMapView new];
+        _mapView.mapType = mapType;
         _mapView.rotateEnabled = YES;
         _mapView.pitchEnabled = YES;
         _mapView.showsPointsOfInterest = NO;
@@ -230,8 +232,8 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
 {
     _mapSegments = segments;
     
-    if (_mapSegments > 0) {
-        self.navigationItem.titleView = [self segmentedControl];
+    if (self.segmentedControl.numberOfSegments > 1) {
+        self.navigationItem.titleView = self.segmentedControl;
     }
 }
 
@@ -331,7 +333,7 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
     UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
     MKMapType mapType = MKMapTypeFromString([segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex]);
     
-    if (_currentMapType == mapType) {
+    if (mapType == _currentMapType) {
         return;
     }
     else _currentMapType = mapType;
@@ -416,17 +418,6 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
     }
     
     return view;
-}
-
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
-{
-    MKAnnotationView *annotationView = [views lastObject];
-    
-    double delayInSeconds = 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [mapView selectAnnotation:annotationView.annotation animated:YES];
-    });
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
