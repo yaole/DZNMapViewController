@@ -17,7 +17,7 @@
 
 - (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle coordinate:(CLLocationCoordinate2D)coordinate
 {
-    return [self initWithTitle:title subtitle:subtitle coordinate:coordinate];
+    return [self initWithTitle:title subtitle:subtitle latitude:coordinate.latitude longitude:coordinate.longitude];
 }
 
 - (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle latitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude;
@@ -42,7 +42,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"title : %@ | subtitle : %@ | image : %@ | Latitude : %f | longitude : %f", self.title, self.subtitle, self.image, self.coordinate.latitude, self.coordinate.longitude];
+    return [NSString stringWithFormat:@"title : %@ | subtitle : %@ | Latitude : %f | longitude : %f | image : %@ | url : %@", self.title, self.subtitle, self.coordinate.latitude, self.coordinate.longitude, self.image, self.url];
 }
 
 @end
