@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4F62E3A519095B53009D0ACD /* MKMapView+CoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F62E3A419095B53009D0ACD /* MKMapView+CoordinateRegion.m */; };
 		4FBF28111906E883009D7A34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28101906E883009D7A34 /* Foundation.framework */; };
 		4FBF28131906E883009D7A34 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28121906E883009D7A34 /* CoreGraphics.framework */; };
 		4FBF28151906E883009D7A34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28141906E883009D7A34 /* UIKit.framework */; };
@@ -18,14 +17,11 @@
 		4FBF28441906E8EC009D7A34 /* DZNAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF28411906E8EC009D7A34 /* DZNAnnotation.m */; };
 		4FBF28451906E8EC009D7A34 /* DZNMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF28431906E8EC009D7A34 /* DZNMapViewController.m */; };
 		4FBF28471906E8F6009D7A34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28461906E8F6009D7A34 /* MapKit.framework */; };
-		4FBF284B1906E98E009D7A34 /* MKMapView+Zoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF284A1906E98E009D7A34 /* MKMapView+Zoom.m */; };
 		4FBF284E1906EACC009D7A34 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF284D1906EACC009D7A34 /* ViewController.m */; };
 		4FBF28521906F18E009D7A34 /* DZNLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF28511906F18E009D7A34 /* DZNLocation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4F62E3A319095B53009D0ACD /* MKMapView+CoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+CoordinateRegion.h"; sourceTree = "<group>"; };
-		4F62E3A419095B53009D0ACD /* MKMapView+CoordinateRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+CoordinateRegion.m"; sourceTree = "<group>"; };
 		4FBF280D1906E883009D7A34 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBF28101906E883009D7A34 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FBF28121906E883009D7A34 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -42,8 +38,6 @@
 		4FBF28421906E8EC009D7A34 /* DZNMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNMapViewController.h; sourceTree = "<group>"; };
 		4FBF28431906E8EC009D7A34 /* DZNMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNMapViewController.m; sourceTree = "<group>"; };
 		4FBF28461906E8F6009D7A34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		4FBF28491906E98E009D7A34 /* MKMapView+Zoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+Zoom.h"; sourceTree = "<group>"; };
-		4FBF284A1906E98E009D7A34 /* MKMapView+Zoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+Zoom.m"; sourceTree = "<group>"; };
 		4FBF284C1906EACC009D7A34 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4FBF284D1906EACC009D7A34 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4FBF28501906F18E009D7A34 /* DZNLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNLocation.h; sourceTree = "<group>"; };
@@ -127,21 +121,9 @@
 				4FBF28411906E8EC009D7A34 /* DZNAnnotation.m */,
 				4FBF28501906F18E009D7A34 /* DZNLocation.h */,
 				4FBF28511906F18E009D7A34 /* DZNLocation.m */,
-				4FBF28481906E98E009D7A34 /* Helper */,
 			);
 			name = DZNMapViewController;
 			path = ../../Source;
-			sourceTree = "<group>";
-		};
-		4FBF28481906E98E009D7A34 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				4FBF28491906E98E009D7A34 /* MKMapView+Zoom.h */,
-				4FBF284A1906E98E009D7A34 /* MKMapView+Zoom.m */,
-				4F62E3A319095B53009D0ACD /* MKMapView+CoordinateRegion.h */,
-				4F62E3A419095B53009D0ACD /* MKMapView+CoordinateRegion.m */,
-			);
-			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,9 +194,7 @@
 				4FBF28211906E883009D7A34 /* AppDelegate.m in Sources */,
 				4FBF28451906E8EC009D7A34 /* DZNMapViewController.m in Sources */,
 				4FBF28521906F18E009D7A34 /* DZNLocation.m in Sources */,
-				4F62E3A519095B53009D0ACD /* MKMapView+CoordinateRegion.m in Sources */,
 				4FBF281D1906E883009D7A34 /* main.m in Sources */,
-				4FBF284B1906E98E009D7A34 /* MKMapView+Zoom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

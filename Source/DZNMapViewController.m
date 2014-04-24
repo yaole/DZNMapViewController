@@ -12,7 +12,7 @@
 #import "DZNAnnotation.h"
 
 #import "MKMapView+Zoom.h"
-#import "MKMapView+CoordinateRegion.h"
+#import "MKMapView+Region.h"
 
 static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
 
