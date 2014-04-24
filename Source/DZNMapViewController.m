@@ -8,7 +8,9 @@
 
 #import "DZNMapViewController.h"
 #import "DZNAnnotation.h"
+
 #import "MKMapView+Zoom.h"
+#import "MKMapView+Region.h"
 
 static NSString *annotationIdentifier = @"DZNMapViewAnnotation";
 
@@ -278,44 +280,13 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
     
     
     CLLocationDistance distance = 200000;
-    MKCoordinateRegion region;
-    
-    if (_locations.count > 1) {
-        region = [self regionForAnnotations:_mapView.annotations];
-    }
-    else {
-        region = MKCoordinateRegionMakeWithDistance(firstAnnotation.coordinate, distance, distance);
-    }
-    
-    [_mapView setRegion:region animated:NO];
-}
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(firstAnnotation.coordinate, distance, distance);
 
-- (MKCoordinateRegion)regionForAnnotations:(NSArray *)annotations {
-    
-    CLLocationDegrees minLat = 90.0;
-    CLLocationDegrees maxLat = -90.0;
-    CLLocationDegrees minLon = 180.0;
-    CLLocationDegrees maxLon = -180.0;
-    
-    for (id <MKAnnotation> annotation in annotations) {
-        if (annotation.coordinate.latitude < minLat) {
-            minLat = annotation.coordinate.latitude;
-        }
-        if (annotation.coordinate.longitude < minLon) {
-            minLon = annotation.coordinate.longitude;
-        }
-        if (annotation.coordinate.latitude > maxLat) {
-            maxLat = annotation.coordinate.latitude;
-        }
-        if (annotation.coordinate.longitude > maxLon) {
-            maxLon = annotation.coordinate.longitude;
-        }
+    if (_locations.count > 1) {
+        region = [_mapView regionForAnnotationsWithPadding:8.0];
     }
-    
-    MKCoordinateSpan span = MKCoordinateSpanMake(maxLat - minLat, maxLon - minLon);
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat - span.latitudeDelta / 2), maxLon - span.longitudeDelta / 2);
-    
-    return MKCoordinateRegionMake(center, span);
+
+    [_mapView setRegion:region animated:NO];
 }
 
 - (void)handleMapTap:(UITapGestureRecognizer *)gesture

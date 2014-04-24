@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F62E3A519095B53009D0ACD /* MKMapView+Region.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F62E3A419095B53009D0ACD /* MKMapView+Region.m */; };
 		4FBF28111906E883009D7A34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28101906E883009D7A34 /* Foundation.framework */; };
 		4FBF28131906E883009D7A34 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28121906E883009D7A34 /* CoreGraphics.framework */; };
 		4FBF28151906E883009D7A34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBF28141906E883009D7A34 /* UIKit.framework */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F62E3A319095B53009D0ACD /* MKMapView+Region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+Region.h"; sourceTree = "<group>"; };
+		4F62E3A419095B53009D0ACD /* MKMapView+Region.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+Region.m"; sourceTree = "<group>"; };
 		4FBF280D1906E883009D7A34 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBF28101906E883009D7A34 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FBF28121906E883009D7A34 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -135,6 +138,8 @@
 			children = (
 				4FBF28491906E98E009D7A34 /* MKMapView+Zoom.h */,
 				4FBF284A1906E98E009D7A34 /* MKMapView+Zoom.m */,
+				4F62E3A319095B53009D0ACD /* MKMapView+Region.h */,
+				4F62E3A419095B53009D0ACD /* MKMapView+Region.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 				4FBF28211906E883009D7A34 /* AppDelegate.m in Sources */,
 				4FBF28451906E8EC009D7A34 /* DZNMapViewController.m in Sources */,
 				4FBF28521906F18E009D7A34 /* DZNLocation.m in Sources */,
+				4F62E3A519095B53009D0ACD /* MKMapView+Region.m in Sources */,
 				4FBF281D1906E883009D7A34 /* main.m in Sources */,
 				4FBF284B1906E98E009D7A34 /* MKMapView+Zoom.m in Sources */,
 			);
