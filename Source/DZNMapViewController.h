@@ -1,9 +1,11 @@
 //
 //  DZNMapViewController.h
 //  DZNMapViewController
+//  https://github.com/dzenbot/DZNMapViewController
 //
 //  Created by Ignacio Romero Zurbuchen on 10/7/13.
 //  Copyright (c) 2013 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
 #import <MapKit/MapKit.h>

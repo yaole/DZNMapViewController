@@ -1,14 +1,16 @@
 //
-//  MKMapView+Region.m
-//  Sample
+//  MKMapView+CoordinateRegion.m
+//  DZNMapViewController
+//  https://github.com/dzenbot/DZNMapViewController
 //
-//  Created by Ignacio on 4/24/14.
+//  Created by Ignacio Romero Zurbuchen on 4/22/14.
 //  Copyright (c) 2014 DZN Labs. All rights reserved.
+//  Licence: MIT-Licence
 //
 
-#import "MKMapView+Region.h"
+#import "MKMapView+CoordinateRegion.h"
 
-@implementation MKMapView (Region)
+@implementation MKMapView (CoordinateRegion)
 
 - (MKCoordinateRegion)regionForAnnotations
 {

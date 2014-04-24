@@ -1,11 +1,11 @@
 //
 //  MKMapView+Zoom.m
-//  DZNCategories
+//  DZNMapViewController
+//  https://github.com/dzenbot/DZNMapViewController
 //
-//  Created by Ignacio Romero Zurbuchen on 11/05/13.
-//  Copyright (c) 2013 DZN Labs. All rights reserved.
+//  Created by Ignacio Romero Zurbuchen on 4/22/14.
+//  Copyright (c) 2014 DZN Labs. All rights reserved.
 //  Licence: MIT-Licence
-//  http://opensource.org/licenses/MIT
 //
 
 #import "MKMapView+Zoom.h"

@@ -1,5 +1,5 @@
 //
-//  MKMapView+Zoom.h
+//  MKMapView+CoordinateRegion.h
 //  DZNMapViewController
 //  https://github.com/dzenbot/DZNMapViewController
 //
@@ -10,10 +10,10 @@
 
 #import <MapKit/MapKit.h>
 
-@interface MKMapView (Zoom)
+@interface MKMapView (CoordinateRegion)
 
-/* The current zoom level of the map.
- Based on Troy's Blog article on http://troybrant.net/blog/2010/01/set-the-zoom-level-of-an-mkmapview/ */
-@property (nonatomic, readonly) NSUInteger zoomLevel;
+- (MKCoordinateRegion)regionForAnnotations;
+- (MKCoordinateRegion)regionForAnnotationsWithPadding:(CGFloat)padding;
 
 @end
+
