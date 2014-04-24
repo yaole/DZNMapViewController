@@ -1,0 +1,12 @@
+PODS:
+  - DZNCategories/CoreLocation (1.1)
+  - DZNCategories/MapKit (1.1):
+    - DZNCategories/CoreLocation
+
+DEPENDENCIES:
+  - DZNCategories/MapKit (= 1.1)
+
+SPEC CHECKSUMS:
+  DZNCategories: 022fd4f198e9125b0511e36642a13185b2ae6a08
+
+COCOAPODS: 0.32.1
