@@ -323,10 +323,10 @@ NSString *NSStringFromDZNMapViewControllerProvider(DZNMapViewControllerProvider 
     
     switch (provider) {
         case DZNMapViewControllerProviderApple:
-            _url = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&ll=%f,%f&z=%f", annotation.title, coordinate.latitude, coordinate.longitude, zoomLevel];
+            _url = [NSString stringWithFormat:@"http://maps.apple.com/maps?saddr=Current+Location&daddr=%f,%f&z=%f", coordinate.latitude, coordinate.longitude, zoomLevel];
             break;
         case DZNMapViewControllerProviderGoogle:
-            _url = [NSString stringWithFormat:@"comgooglemaps://?daddr=%@&center=%f,%f&zoom=%f", annotation.title, coordinate.latitude, coordinate.longitude, zoomLevel];
+            _url = [NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&zoom=%f", coordinate.latitude, coordinate.longitude, zoomLevel];
             break;
         case DZNMapViewControllerProviderWaze:
             _url = [NSString stringWithFormat:@"waze://?ll=%f,%f&z=%f&navigate=yes",coordinate.latitude,coordinate.longitude,zoomLevel];
